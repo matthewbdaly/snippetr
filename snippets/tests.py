@@ -106,3 +106,59 @@ class AdminTest(BaseAcceptanceTest):
         # Check new snippet now in database
         all_snippets = Snippet.objects.all()
         self.assertEquals(len(all_snippets), 1)
+
+    def test_edit_snippet(self):
+        # Create the snippet
+        snippet = Snippet()
+        snippet.title = 'My snippet'
+        snippet.content = 'This is my snippet'
+        snippet.pub_date = timezone.now()
+        snippet.save()
+
+        # Log in
+        self.client.login(username='bobsmith', password="password")
+
+        # Edit the post
+        response = self.client.post('/admin/snippets/snippet/1/', {
+            'title': 'My second snippet',
+            'content': 'This is my second snippet',
+            'pub_date_0': '2013-12-28',
+            'pub_date_1': '22:00:04'
+        },
+        follow=True
+        )
+        self.assertEquals(response.status_code, 200)
+
+        # Check changed successfully
+        self.assertTrue('changed successfully' in response.content)
+
+        # Check post amended
+        all_snippets = Snippet.objects.all()
+        self.assertEquals(len(all_snippets), 1)
+        only_snippet = all_snippets[0]
+        self.assertEquals(only_snippet.title, 'My second snippet')
+        self.assertEquals(only_snippet.content, 'This is my second snippet')
+
+    def test_delete_snippet(self):
+        # Create the snippet
+        snippet = Snippet()
+        snippet.title = 'My snippet'
+        snippet.content = 'This is my snippet'
+        snippet.pub_date = timezone.now()
+        snippet.save()
+
+        # Log in
+        self.client.login(username='bobsmith', password="password")
+
+        # Delete the snippet
+        response = self.client.post('/admin/snippets/snippet/1/delete/', {
+            'post': 'yes'
+        }, follow=True)
+        self.assertEquals(response.status_code, 200)
+
+        # Check deleted successfully
+        self.assertTrue('deleted successfully' in response.content)
+
+        # Check post amended
+        all_snippets = Snippet.objects.all()
+        self.assertEquals(len(all_snippets), 0)
