@@ -80,3 +80,29 @@ class AdminTest(BaseAcceptanceTest):
 
         # Check 'Log in' in response
         self.assertTrue('Log in' in response.content)
+
+    def test_create_snippet(self):
+        # Log in
+        self.client.login(username='bobsmith', password="password")
+
+        # Check response code
+        response = self.client.get('/admin/snippets/snippet/add/')
+        self.assertEquals(response.status_code, 200)
+
+        # Create the new snippet
+        response = self.client.post('/admin/snippets/snippet/add/', {
+                'title': 'My first snippet',
+                'content': 'This is my first snippet',
+                'pub_date_0': '2013-12-28',
+                'pub_date_1': '22:00:04',
+                },
+                follow=True
+        )
+        self.assertEquals(response.status_code, 200)
+
+        # Check added successfully
+        self.assertTrue('added successfully' in response.content)
+
+        # Check new snippet now in database
+        all_snippets = Snippet.objects.all()
+        self.assertEquals(len(all_snippets), 1)
