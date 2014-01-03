@@ -1,0 +1,27 @@
+{
+  "name": "snippetr",
+  "version": "0.0.1",
+  "authors": [
+    "Matthew Daly <matthewbdaly@gmail.com>"
+  ],
+  "description": "A snippet-sharing application built with Django",
+  "main": "manage.py",
+  "keywords": [
+    "snippet"
+  ],
+  "license": "GPLv2",
+  "homepage": "http://matthewdaly.co.uk",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "snippets/static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "html5-boilerplate": "~4.3.0",
+    "bootstrap": "~3.0.3"
+  }
+}
