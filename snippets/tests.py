@@ -216,15 +216,8 @@ class SnippetViewTest(BaseAcceptanceTest):
         all_snippets = Snippet.objects.all()
         self.assertEquals(len(all_snippets), 1)
         only_snippet = all_snippets[0]
-        self.assertEquals(only_snippet, snippet)
 
         # Check the snippet attributes
         self.assertEquals(only_snippet.title, 'My first snippet')
         self.assertEquals(only_snippet.content, 'This is my first snippet')
         self.assertEquals(only_snippet.slug, 'my-first-snippet')
-        self.assertEquals(only_snippet.pub_date.day, snippet.pub_date.day)
-        self.assertEquals(only_snippet.pub_date.month, snippet.pub_date.month)
-        self.assertEquals(only_snippet.pub_date.year, snippet.pub_date.year)
-        self.assertEquals(only_snippet.pub_date.hour, snippet.pub_date.hour)
-        self.assertEquals(only_snippet.pub_date.minute, snippet.pub_date.minute)
-        self.assertEquals(only_snippet.pub_date.second, snippet.pub_date.second)
