@@ -2,7 +2,9 @@
 
     {% block content %}
         <div class="snippet">
-        <h1>{{ object.title }}</h1>
+        <div class="page-header">
+            <h1>{{ object.title }}</h1>
+        </div>
         <h3>{{ object.pub_date }}</h3>
         {{ object.content }}
         </div>
