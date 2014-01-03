@@ -11,6 +11,7 @@ class SnippetTest(TestCase):
         # Set the attributes
         snippet.title = 'My snippet'
         snippet.content = 'This is my snippet'
+        snippet.slug = 'my-snippet'
         snippet.pub_date = timezone.now()
 
         # Save it
@@ -25,6 +26,7 @@ class SnippetTest(TestCase):
         # Check attributes
         self.assertEquals(only_snippet.title, 'My snippet')
         self.assertEquals(only_snippet.content, 'This is my snippet')
+        self.assertEquals(only_snippet.slug, 'my-snippet')
         self.assertEquals(only_snippet.pub_date.day, snippet.pub_date.day)
         self.assertEquals(only_snippet.pub_date.month, snippet.pub_date.month)
         self.assertEquals(only_snippet.pub_date.year, snippet.pub_date.year)
@@ -95,6 +97,7 @@ class AdminTest(BaseAcceptanceTest):
                 'content': 'This is my first snippet',
                 'pub_date_0': '2013-12-28',
                 'pub_date_1': '22:00:04',
+                'slug': 'my-first-snippet'
                 },
                 follow=True
         )
@@ -113,6 +116,7 @@ class AdminTest(BaseAcceptanceTest):
         snippet.title = 'My snippet'
         snippet.content = 'This is my snippet'
         snippet.pub_date = timezone.now()
+        snippet.slug = 'my-snippet'
         snippet.save()
 
         # Log in
@@ -123,7 +127,8 @@ class AdminTest(BaseAcceptanceTest):
             'title': 'My second snippet',
             'content': 'This is my second snippet',
             'pub_date_0': '2013-12-28',
-            'pub_date_1': '22:00:04'
+            'pub_date_1': '22:00:04',
+            'slug': 'my-second-snippet'
         },
         follow=True
         )
@@ -138,12 +143,14 @@ class AdminTest(BaseAcceptanceTest):
         only_snippet = all_snippets[0]
         self.assertEquals(only_snippet.title, 'My second snippet')
         self.assertEquals(only_snippet.content, 'This is my second snippet')
+        self.assertEquals(only_snippet.slug, 'my-second-snippet')
 
     def test_delete_snippet(self):
         # Create the snippet
         snippet = Snippet()
         snippet.title = 'My snippet'
         snippet.content = 'This is my snippet'
+        snippet.slug = 'my-snippet'
         snippet.pub_date = timezone.now()
         snippet.save()
 
@@ -171,6 +178,7 @@ class SnippetViewTest(BaseAcceptanceTest):
         snippet.title = 'My snippet'
         snippet.content = 'This is my snippet'
         snippet.pub_date = timezone.now()
+        snippet.slug = 'my-snippet'
         snippet.save()
 
         # Check new snippet now in database
