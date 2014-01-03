@@ -1,3 +1,4 @@
+BeautifulSoup==3.2.1
 Django==1.6.1
 Pygments==1.6
 South==0.8.4

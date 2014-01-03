@@ -1,12 +1,14 @@
 {% extends "snippets/includes/base.html" %}
 
+    {% load highlightcode %}
+
     {% block content %}
         <div class="snippet">
         <div class="page-header">
             <h1>{{ object.title }}</h1>
         </div>
         <h3>{{ object.pub_date }}</h3>
-        <pre><code>{{ object.content }}</code></pre>
+        <pre><code>{{ object.content|highlightcode|safe }}</code></pre>
         </div>
 
     {% endblock %}
