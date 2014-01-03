@@ -1,0 +1,10 @@
+{% extends "snippets/includes/base.html" %}
+
+    {% block content %}
+        <div class="snippet">
+        <h1>{{ object.title }}</h1>
+        <h3>{{ object.pub_date }}</h3>
+        {{ object.content }}
+        </div>
+
+    {% endblock %}
