@@ -162,3 +162,31 @@ class AdminTest(BaseAcceptanceTest):
         # Check post amended
         all_snippets = Snippet.objects.all()
         self.assertEquals(len(all_snippets), 0)
+
+
+class SnippetViewTest(BaseAcceptanceTest):
+    def test_view_snippet(self):
+        # Create the snippet
+        snippet = Snippet()
+        snippet.title = 'My snippet'
+        snippet.content = 'This is my snippet'
+        snippet.pub_date = timezone.now()
+        snippet.save()
+
+        # Check new snippet now in database
+        all_snippets = Snippet.objects.all()
+        self.assertEquals(len(all_snippets), 1)
+        only_snippet = all_snippets[0]
+        self.assertEquals(only_snippet, snippet)
+
+        # Fetch the snippet
+        snippet_url = only_snippet.get_absolute_url()
+        response = self.client.get(snippet_url)
+        self.assertEquals(response.status_code, 200)
+
+        # Check the snippet details are in the response
+        self.assertTrue(snippet.title in response.content)
+        self.assertTrue(snippet.content in response.content)
+        self.assertTrue(str(snippet.pub_date.year) in response.content)
+        self.assertTrue(snippet.pub_date.strftime('%b') in response.content)
+        self.assertTrue(str(snippet.pub_date.day) in response.content)
