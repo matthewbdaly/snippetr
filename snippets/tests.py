@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, LiveServerTestCase, Client
 from django.utils import timezone
 from snippets.models import Snippet
 
@@ -31,3 +31,52 @@ class SnippetTest(TestCase):
         self.assertEquals(only_snippet.pub_date.hour, snippet.pub_date.hour)
         self.assertEquals(only_snippet.pub_date.minute, snippet.pub_date.minute)
         self.assertEquals(only_snippet.pub_date.second, snippet.pub_date.second)
+
+
+class BaseAcceptanceTest(LiveServerTestCase):
+    def setUp(self):
+        self.client = Client()
+
+class AdminTest(BaseAcceptanceTest):
+    fixtures = ['users.json']
+
+    def test_login(self):
+        # Get login page
+        response = self.client.get('/admin/')
+
+        # Check response code
+        self.assertEquals(response.status_code, 200)
+
+        # Check 'Log in' in response
+        self.assertTrue('Log in' in response.content)
+
+        # Log the user in
+        self.client.login(username='bobsmith', password="password")
+
+        # Check response code
+        response = self.client.get('/admin/')
+        self.assertEquals(response.status_code, 200)
+
+        # Check 'Log out' in response
+        self.assertTrue('Log out' in response.content)
+
+    def test_logout(self):
+        # Log in
+        self.client.login(username='bobsmith', password="password")
+
+        # Check response code
+        response = self.client.get('/admin/')
+        self.assertEquals(response.status_code, 200)
+
+        # Check 'Log out' in response
+        self.assertTrue('Log out' in response.content)
+
+        # Log out
+        self.client.logout()
+
+        # Check response code
+        response = self.client.get('/admin/')
+        self.assertEquals(response.status_code, 200)
+
+        # Check 'Log in' in response
+        self.assertTrue('Log in' in response.content)
