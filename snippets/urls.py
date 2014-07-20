@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url, include
-from snippets.views import SnippetCreateView, SnippetDetailView, LoginView
+from snippets.views import SnippetCreateView, SnippetDetailView, LoginView, anonymous_required
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = patterns('',
@@ -18,6 +18,6 @@ urlpatterns = patterns('',
         )),
 
     # Login
-    url(r'^accounts/login/?$', LoginView.as_view(
-        )),
+    url(r'^accounts/login/?$', anonymous_required(LoginView.as_view(
+        ))),
 )

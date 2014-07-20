@@ -1,8 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import CreateView
 from snippets.forms import SnippetForm
 from snippets.models import Snippet
+from django.conf import settings
+
+def anonymous_required(func):
+    """
+    Require someone visiting this page to not be logged in
+    """
+    def as_view(request, *args, **kwargs):
+        redirect_to = kwargs.get('next', settings.LOGIN_REDIRECT_URL )
+        if request.user.is_authenticated():
+            return redirect(redirect_to)
+        response = func(request, *args, **kwargs)
+        return response
+    return as_view
+
 
 class GetRequestAndUserMixin(object):
     """
