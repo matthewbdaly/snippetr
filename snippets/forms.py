@@ -12,6 +12,6 @@ class SnippetForm(ModelForm):
         instance = super(SnippetForm, self).save(commit=False)
         instance.pub_date = timezone.now()
         instance.slug = slugify(instance.title)
-        if commit:
+        if commit: # pragma: no cover
             instance.save()
         return instance
