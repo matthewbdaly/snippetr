@@ -113,16 +113,16 @@ STATICFILES_DIRS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-      'social.backends.open_id.OpenIdAuth',
-      'social.backends.github.GithubOAuth2',
-      'social.backends.google.GoogleOAuth2',
-      'social.backends.google.GoogleOAuth',
-      'social.backends.twitter.TwitterOAuth',
-      'social.backends.yahoo.YahooOpenId',
-      'django.contrib.auth.backends.ModelBackend',
+    'social.backends.github.GithubOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'social.apps.django_app.context_processors.backends',
     'social.apps.django_app.context_processors.login_redirect',
+    'django.contrib.auth.context_processors.auth',
 )
+
+# Social auth settings
+SOCIAL_AUTH_GITHUB_KEY = 'b437270ee6d52700d2e2'
+SOCIAL_AUTH_GITHUB_SECRET = '8a2d011c1aaf29a54d7bd2e0e09f638dfbf1692c'
