@@ -15,14 +15,14 @@ class GetRequestAndUserMixin(object):
         return context
 
 
-class SnippetDetailView(DetailView, GetRequestAndUserMixin):
+class SnippetDetailView(GetRequestAndUserMixin, DetailView):
     """
     View for displaying a snippet
     """
     model = Snippet
 
 
-class SnippetCreateView(CreateView, GetRequestAndUserMixin):
+class SnippetCreateView(GetRequestAndUserMixin, CreateView):
     """
     View for creating a snippet
     """
