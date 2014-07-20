@@ -49,7 +49,7 @@
                         </li>
                         {% else %}
                         <li>
-                        <a href="{% url 'social:begin' 'github-oauth2' %}?next={{ request.path }}">Login with Github</a>
+                        <a href="{% url 'social:begin' 'github' %}?next={{ request.path }}">Login with Github</a>
                         </li>
                         {% endif %}
                     </ul>
