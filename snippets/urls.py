@@ -8,6 +8,9 @@ urlpatterns = patterns('',
     # Social integration
     url('', include('social.apps.django_app.urls', namespace='social')),
 
+    # Auth
+    url('', include('django.contrib.auth.urls', namespace='auth')),
+
     # Index - create new snippet
     url(r'^$', CreateView.as_view(
         model=Snippet,

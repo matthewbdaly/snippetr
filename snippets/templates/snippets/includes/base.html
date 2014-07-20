@@ -37,8 +37,22 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" href="/">Snippetr</a>
-                    <div id="header-nav" class="nav-collapse collapse">
-                    </div>
+                </div>
+                <div id="header-nav" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        {% if user and not user.is_anonymous %}
+                        <li>
+                        <a>Hello {{ user.get_full_name|default:user.username }}!</a>
+                        </li>
+                        <li>
+                        <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+                        </li>
+                        {% else %}
+                        <li>
+                        <a href="{% url 'social:begin' 'github-oauth2' %}?next={{ request.path }}">Login with Github</a>
+                        </li>
+                        {% endif %}
+                    </ul>
                 </div>
             </div>
         </div>
@@ -46,8 +60,8 @@
         <div class="container">
 
             <div class="row">
- 
-        {% block content %}{% endblock %}
+
+                {% block content %}{% endblock %}
 
             </div>
         </div>
@@ -66,12 +80,12 @@
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
+(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+                                                        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+ e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+ e.src='//www.google-analytics.com/analytics.js';
+ r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>
     </body>
 </html>
