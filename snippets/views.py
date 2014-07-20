@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import DetailView
+from django.views.generic import DetailView, TemplateView
 from django.views.generic.edit import CreateView
 from snippets.forms import SnippetForm
 from snippets.models import Snippet
@@ -28,3 +28,10 @@ class SnippetCreateView(GetRequestAndUserMixin, CreateView):
     """
     model = Snippet
     form_class = SnippetForm
+
+
+class LoginView(GetRequestAndUserMixin, TemplateView):
+    """
+    View for requiring login
+    """
+    template_name = 'registration/login.html'
