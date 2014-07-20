@@ -103,9 +103,6 @@ class AdminTest(BaseAcceptanceTest):
         )
         self.assertEquals(response.status_code, 200)
 
-        # Check added successfully
-        self.assertTrue('added successfully' in response.content)
-
         # Check new snippet now in database
         all_snippets = Snippet.objects.all()
         self.assertEquals(len(all_snippets), 1)
@@ -134,9 +131,6 @@ class AdminTest(BaseAcceptanceTest):
         )
         self.assertEquals(response.status_code, 200)
 
-        # Check changed successfully
-        self.assertTrue('changed successfully' in response.content)
-
         # Check post amended
         all_snippets = Snippet.objects.all()
         self.assertEquals(len(all_snippets), 1)
@@ -162,9 +156,6 @@ class AdminTest(BaseAcceptanceTest):
             'post': 'yes'
         }, follow=True)
         self.assertEquals(response.status_code, 200)
-
-        # Check deleted successfully
-        self.assertTrue('deleted successfully' in response.content)
 
         # Check post amended
         all_snippets = Snippet.objects.all()

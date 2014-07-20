@@ -1,0 +1,14 @@
+{
+  "name": "flat-ui",
+  "homepage": "https://github.com/iurevych/Flat-UI",
+  "_release": "c0afb3e80d",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "c0afb3e80d5ccf81a3f271f16d352ee2908a095b"
+  },
+  "_source": "git://github.com/iurevych/Flat-UI.git",
+  "_target": "*",
+  "_originalSource": "flat-ui",
+  "_direct": true
+}

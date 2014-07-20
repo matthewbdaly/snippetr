@@ -123,6 +123,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
 )
 
-# Social auth settings
-SOCIAL_AUTH_GITHUB_KEY = 'b437270ee6d52700d2e2'
-SOCIAL_AUTH_GITHUB_SECRET = '8a2d011c1aaf29a54d7bd2e0e09f638dfbf1692c'
+# Social auth settings
+if 'SOCIAL_AUTH_GITHUB_KEY' in os.environ:
+    SOCIAL_AUTH_GITHUB_KEY = os.environ['SOCIAL_AUTH_GITHUB_KEY']
+else:
+    SOCIAL_AUTH_GITHUB_KEY = ''
+if 'SOCIAL_AUTH_GITHUB_SECRET' in os.environ:
+    SOCIAL_AUTH_GITHUB_SECRET = os.environ['SOCIAL_AUTH_GITHUB_SECRET']
+else:
+    SOCIAL_AUTH_GITHUB_SECRET = ''
