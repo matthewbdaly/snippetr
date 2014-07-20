@@ -9,7 +9,7 @@ def anonymous_required(func):
     """
     Require someone visiting this page to not be logged in
     """
-    def as_view(request, *args, **kwargs):
+    def as_view(request, *args, **kwargs): # pragma: no cover
         redirect_to = kwargs.get('next', settings.LOGIN_REDIRECT_URL )
         if request.user.is_authenticated():
             return redirect(redirect_to)

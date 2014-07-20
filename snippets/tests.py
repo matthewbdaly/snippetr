@@ -193,6 +193,10 @@ class SnippetViewTest(BaseAcceptanceTest):
         self.assertTrue(str(snippet.pub_date.day) in response.content)
 
     def test_create_snippet(self):
+        # Try to get home page - should fail
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 302)
+
         # Log in
         self.client.login(username='bobsmith', password="password")
 
