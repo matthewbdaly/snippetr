@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    'social.apps.django_app.default',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -109,4 +110,19 @@ STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+)
+
+AUTHENTICATION_BACKENDS = (
+      'social.backends.open_id.OpenIdAuth',
+      'social.backends.github.GithubOAuth2',
+      'social.backends.google.GoogleOAuth2',
+      'social.backends.google.GoogleOAuth',
+      'social.backends.twitter.TwitterOAuth',
+      'social.backends.yahoo.YahooOpenId',
+      'django.contrib.auth.backends.ModelBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'social.apps.django_app.context_processors.backends',
+    'social.apps.django_app.context_processors.login_redirect',
 )

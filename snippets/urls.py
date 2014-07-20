@@ -1,10 +1,13 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
 from django.views.generic import DetailView
 from django.views.generic.edit import CreateView
 from snippets.models import Snippet
 from snippets.forms import SnippetForm
 
 urlpatterns = patterns('',
+    # Social integration
+    url('', include('social.apps.django_app.urls', namespace='social')),
+
     # Index - create new snippet
     url(r'^$', CreateView.as_view(
         model=Snippet,

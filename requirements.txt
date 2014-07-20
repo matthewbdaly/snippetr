@@ -14,9 +14,14 @@ docopt==0.6.2
 gunicorn==19.0.0
 logilab-common==0.62.0
 markdown2==2.2.1
+oauthlib==0.6.3
 psycopg2==2.5.3
 pylint==1.2.1
+python-openid==2.2.5
+python-social-auth==0.1.26
 requests==2.3.0
+requests-oauthlib==0.4.1
+six==1.7.3
 sqlparse==0.1.10
 static==0.4
 static3==0.5.1
