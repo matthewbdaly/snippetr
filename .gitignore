@@ -6,3 +6,4 @@ snippets/static/bower_components/
 reports/
 htmlcov/
 .coverage
+staticfiles
