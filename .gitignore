@@ -2,7 +2,6 @@ venv/
 *.pyc
 db.sqlite3
 .DS_Store
-snippets/static/bower_components/
 reports/
 htmlcov/
 .coverage
