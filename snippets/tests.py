@@ -163,6 +163,8 @@ class AdminTest(BaseAcceptanceTest):
 
 
 class SnippetViewTest(BaseAcceptanceTest):
+    fixtures = ['users.json']
+
     def test_view_snippet(self):
         # Create the snippet
         snippet = Snippet()
