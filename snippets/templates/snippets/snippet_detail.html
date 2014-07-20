@@ -1,6 +1,7 @@
 {% extends "snippets/includes/base.html" %}
 
     {% load custom_markdown %}
+    {% load comments %}
 
     {% block content %}
         <div class="snippet">
@@ -10,5 +11,39 @@
         <h3>{{ object.pub_date }}</h3>
         <div>{{ object.content|custom_markdown|safe }}</div>
         </div>
+
+        {% get_comment_list for object as comment_list %}
+        <ul class="list-group">
+        {% for comment in comment_list %}
+        <li class="list-group-item">
+        <h4 class="list-group-item-heading">{% if comment.user.first_name and comment.user.last_name %}{{ comment.user.first_name }} {{ comment.user.last_name }}{% else %}{{ comment.user_name }}{% endif %}</h4>
+        {{ comment.comment|custom_markdown }}
+        <p>Posted {{ comment.submit_date }}</p>
+        </li>
+        {% endfor %}
+        </ul>
+
+        <p>You may use <a href="http://daringfireball.net/projects/markdown/">Markdown</a> for formatting your comments</p>
+        {% get_comment_form for object as commentform %}
+
+        <form action="{% comment_form_target %}" method="post">
+            {% csrf_token %}
+
+            <!-- Security fields -->
+            {{ commentform.content_type }}
+            {{ commentform.object_pk }}
+            {{ commentform.timestamp }}
+            {{ commentform.security_hash }}
+            <!-- End security fields -->
+
+            <input type="hidden" name="next" value="{{ object.get_absolute_url }}" />
+
+            <div class="form-group">
+                <label for="id_comment">Comment</label> <textarea class="form-control" cols="40" id="id_comment" name="comment" rows="10"></textarea>
+            </div>
+
+            <input type="submit" class="btn btn-primary" name="submit" value="Post">
+        </form>
+
 
     {% endblock %}
