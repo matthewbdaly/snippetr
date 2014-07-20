@@ -1,6 +1,6 @@
 {% extends "snippets/includes/base.html" %}
 
-    {% load highlightcode %}
+    {% load custom_markdown %}
 
     {% block content %}
         <div class="snippet">
@@ -8,7 +8,7 @@
             <h1>{{ object.title }}</h1>
         </div>
         <h3>{{ object.pub_date }}</h3>
-        <pre><code>{{ object.content|highlightcode|safe }}</code></pre>
+        <div>{{ object.content|custom_markdown|safe }}</div>
         </div>
 
     {% endblock %}
