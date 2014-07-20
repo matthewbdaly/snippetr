@@ -8,6 +8,7 @@ coverage==3.7.1
 coveralls==0.4.2
 dj-database-url==0.3.0
 dj-static==0.0.6
+django-contrib-comments==1.5
 django-jenkins==0.16.2
 django-toolbelt==0.0.1
 docopt==0.6.2

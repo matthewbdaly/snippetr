@@ -9,6 +9,9 @@ urlpatterns = patterns('',
     # Auth
     url('', include('django.contrib.auth.urls', namespace='auth')),
 
+    # Comments
+    (r'^comments/', include('django_comments.urls')),
+
     # Index - create new snippet
     url(r'^$', login_required(SnippetCreateView.as_view(
         ))),

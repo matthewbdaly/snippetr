@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'snippets',
     'south',
+    'django.contrib.sites',
+    'django_comments',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -141,3 +143,4 @@ else:
     SOCIAL_AUTH_GITHUB_SECRET = ''
 
 LOGIN_REDIRECT_URL = '/'
+SITE_ID = 1
