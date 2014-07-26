@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.core.cache import cache
 
 # Create your models here.
 class Snippet(models.Model):
@@ -13,3 +15,11 @@ class Snippet(models.Model):
 
     def __unicode__(self):
         return self.title
+
+
+# Define signals
+def new_snippet(sender, instance, created, **kwargs):
+    cache.clear()
+
+# Set up signals
+post_save.connect(new_snippet, sender=Snippet)
