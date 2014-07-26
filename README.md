@@ -6,6 +6,6 @@ Snippetr
 
 A simple code-snippet application built with Django. Use fenced code blocks to denote the start and end of snippets and the language in question.
 
-Uses `python-social-auth` to facilitate easy login using third-party services. I've implemented it with Github, but Twitter or other services should be straightforward enough. Also supports comments.
+Uses `python-social-auth` to facilitate easy login using third-party services. I've implemented it with Github, but Twitter or other services should be straightforward enough. Also supports comments using the `django_comments` module.
 
 [Demo](http://snippetr.shellshocked.info/)
