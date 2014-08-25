@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'south',
     'django.contrib.sites',
     'django_comments',
+    'django.contrib.sitemaps',
 )
 
 MIDDLEWARE_CLASSES = (

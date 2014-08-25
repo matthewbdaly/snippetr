@@ -1,6 +1,13 @@
 from django.conf.urls import patterns, url, include
 from snippets.views import SnippetCreateView, SnippetDetailView, LoginView, anonymous_required
 from django.contrib.auth.decorators import login_required
+from django.contrib.sitemaps.views import sitemap
+from snippets.sitemap import SnippetSiteMap
+
+# Define sitemaps
+sitemaps = {
+    'snippets': SnippetSiteMap
+}
 
 urlpatterns = patterns('',
     # Social integration
@@ -23,4 +30,8 @@ urlpatterns = patterns('',
     # Login
     url(r'^accounts/login/?$', anonymous_required(LoginView.as_view(
         ))),
+
+    # Sitemap
+    url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},
+            name='django.contrib.sitemaps.views.sitemap'),
 )

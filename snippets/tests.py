@@ -218,3 +218,15 @@ class SnippetViewTest(BaseAcceptanceTest):
         self.assertEquals(only_snippet.title, 'My first snippet')
         self.assertEquals(only_snippet.content, 'This is my first snippet')
         self.assertEquals(only_snippet.slug, 'my-first-snippet')
+
+    def test_sitemap(self):
+        # Create a snippet
+        snippet = Snippet()
+        snippet.title = 'My snippet'
+        snippet.content = 'This is my snippet'
+        snippet.slug = 'my-snippet'
+        snippet.pub_date = timezone.now()
+        snippet.save()
+
+        response = self.client.get('/sitemap.xml')
+        self.assertEquals(response.status_code, 200)
