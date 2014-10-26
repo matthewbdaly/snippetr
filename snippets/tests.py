@@ -120,7 +120,7 @@ class AdminTest(BaseAcceptanceTest):
         self.client.login(username='bobsmith', password="password")
 
         # Edit the post
-        response = self.client.post('/admin/snippets/snippet/1/', {
+        response = self.client.post('/admin/snippets/snippet/' + str(snippet.pk) + '/', {
             'title': 'My second snippet',
             'content': 'This is my second snippet',
             'pub_date_0': '2013-12-28',
@@ -152,7 +152,7 @@ class AdminTest(BaseAcceptanceTest):
         self.client.login(username='bobsmith', password="password")
 
         # Delete the snippet
-        response = self.client.post('/admin/snippets/snippet/1/delete/', {
+        response = self.client.post('/admin/snippets/snippet/' + str(snippet.pk) + '/delete/', {
             'post': 'yes'
         }, follow=True)
         self.assertEquals(response.status_code, 200)
