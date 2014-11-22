@@ -1,4 +1,5 @@
 from django.test import TestCase, LiveServerTestCase, Client
+from django.contrib.auth.models import User
 from django.utils import timezone
 from snippets.models import Snippet
 import factory.django
@@ -18,6 +19,18 @@ class SnippetFactory(factory.django.DjangoModelFactory):
     content = 'This is my snippet'
     slug = 'my-snippet'
     pub_date = timezone.now()
+
+
+class UserFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = User
+
+    email = 'bob@example.com'
+    username = 'bobsmith'
+    password = factory.PostGenerationMethodCall('set_password', 'password')
+    is_superuser = True
+    is_staff = True
+    is_active = True
 
 
 # Create your tests here.
@@ -49,9 +62,11 @@ class BaseAcceptanceTest(LiveServerTestCase):
         self.client = Client()
 
 class AdminTest(BaseAcceptanceTest):
-    fixtures = ['users.json']
 
     def test_login(self):
+        # Create user
+        user = UserFactory()
+
         # Get login page
         response = self.client.get('/admin/', follow=True)
 
@@ -72,6 +87,9 @@ class AdminTest(BaseAcceptanceTest):
         self.assertTrue('Log out' in response.content)
 
     def test_logout(self):
+        # Create user
+        user = UserFactory()
+
         # Log in
         self.client.login(username='bobsmith', password="password")
 
@@ -93,6 +111,9 @@ class AdminTest(BaseAcceptanceTest):
         self.assertTrue('Log in' in response.content)
 
     def test_create_snippet(self):
+        # Create user
+        user = UserFactory()
+
         # Log in
         self.client.login(username='bobsmith', password="password")
 
@@ -117,6 +138,9 @@ class AdminTest(BaseAcceptanceTest):
         self.assertEquals(len(all_snippets), 1)
 
     def test_edit_snippet(self):
+        # Create user
+        user = UserFactory()
+
         # Create the snippet
         snippet = SnippetFactory()
 
@@ -144,6 +168,9 @@ class AdminTest(BaseAcceptanceTest):
         self.assertEquals(only_snippet.slug, 'my-second-snippet')
 
     def test_delete_snippet(self):
+        # Create user
+        user = UserFactory()
+
         # Create the snippet
         snippet = SnippetFactory()
 
@@ -162,9 +189,10 @@ class AdminTest(BaseAcceptanceTest):
 
 
 class SnippetViewTest(BaseAcceptanceTest):
-    fixtures = ['users.json']
-
     def test_view_snippet(self):
+        # Create user
+        user = UserFactory()
+
         # Create the snippet
         snippet = SnippetFactory()
 
@@ -187,6 +215,9 @@ class SnippetViewTest(BaseAcceptanceTest):
         self.assertTrue(str(snippet.pub_date.day) in response.content)
 
     def test_create_snippet(self):
+        # Create user
+        user = UserFactory()
+
         # Try to get home page - should fail
         response = self.client.get('/')
         self.assertEquals(response.status_code, 302)
