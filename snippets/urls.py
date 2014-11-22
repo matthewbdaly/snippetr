@@ -3,6 +3,7 @@ from snippets.views import SnippetCreateView, SnippetDetailView, LoginView, anon
 from django.contrib.auth.decorators import login_required
 from django.contrib.sitemaps.views import sitemap
 from snippets.sitemap import SnippetSiteMap
+from django.views.decorators.cache import cache_page
 
 # Define sitemaps
 sitemaps = {
@@ -24,8 +25,8 @@ urlpatterns = patterns('',
         ))),
 
     # Individual posts
-    url(r'^(?P<pub_date__year>\d{4})/(?P<pub_date__month>\d{1,2})/(?P<slug>[a-zA-Z0-9-]+)/?$', SnippetDetailView.as_view(
-        )),
+    url(r'^(?P<pub_date__year>\d{4})/(?P<pub_date__month>\d{1,2})/(?P<slug>[a-zA-Z0-9-]+)/?$', cache_page(900)(SnippetDetailView.as_view(
+        ))),
 
     # Login
     url(r'^accounts/login/?$', anonymous_required(LoginView.as_view(

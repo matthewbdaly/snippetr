@@ -51,9 +51,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 ROOT_URLCONF = 'snippetr.urls'
@@ -172,8 +169,5 @@ def get_cache():
     }
 
 CACHES = get_cache()
-CACHE_MIDDLEWARE_ALIAS = 'default'
-CACHE_MIDDLEWARE_SECONDS = 300
-CACHE_MIDDLEWARE_KEY_PREFIX = ''
 
 TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
