@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django_comments',
     'django.contrib.sitemaps',
+    'django_behave',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -174,3 +175,5 @@ CACHES = get_cache()
 CACHE_MIDDLEWARE_ALIAS = 'default'
 CACHE_MIDDLEWARE_SECONDS = 300
 CACHE_MIDDLEWARE_KEY_PREFIX = ''
+
+TEST_RUNNER = 'django_behave.runner.DjangoBehaveTestSuiteRunner'
