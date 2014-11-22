@@ -1,21 +1,30 @@
 from django.test import TestCase, LiveServerTestCase, Client
 from django.utils import timezone
 from snippets.models import Snippet
+import factory.django
+
+# Factories for tests
+class SnippetFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Snippet
+        django_get_or_create = (
+            'title',
+            'content',
+            'slug',
+            'pub_date'
+        )
+
+    title = 'My snippet'
+    content = 'This is my snippet'
+    slug = 'my-snippet'
+    pub_date = timezone.now()
+
 
 # Create your tests here.
 class SnippetTest(TestCase):
     def test_create_snippet(self):
         # Create the snippet
-        snippet = Snippet()
-
-        # Set the attributes
-        snippet.title = 'My snippet'
-        snippet.content = 'This is my snippet'
-        snippet.slug = 'my-snippet'
-        snippet.pub_date = timezone.now()
-
-        # Save it
-        snippet.save()
+        snippet = SnippetFactory()
 
         # Check we can find it
         all_snippets = Snippet.objects.all()
@@ -109,12 +118,7 @@ class AdminTest(BaseAcceptanceTest):
 
     def test_edit_snippet(self):
         # Create the snippet
-        snippet = Snippet()
-        snippet.title = 'My snippet'
-        snippet.content = 'This is my snippet'
-        snippet.pub_date = timezone.now()
-        snippet.slug = 'my-snippet'
-        snippet.save()
+        snippet = SnippetFactory()
 
         # Log in
         self.client.login(username='bobsmith', password="password")
@@ -141,12 +145,7 @@ class AdminTest(BaseAcceptanceTest):
 
     def test_delete_snippet(self):
         # Create the snippet
-        snippet = Snippet()
-        snippet.title = 'My snippet'
-        snippet.content = 'This is my snippet'
-        snippet.slug = 'my-snippet'
-        snippet.pub_date = timezone.now()
-        snippet.save()
+        snippet = SnippetFactory()
 
         # Log in
         self.client.login(username='bobsmith', password="password")
@@ -167,12 +166,7 @@ class SnippetViewTest(BaseAcceptanceTest):
 
     def test_view_snippet(self):
         # Create the snippet
-        snippet = Snippet()
-        snippet.title = 'My snippet'
-        snippet.content = 'This is my snippet'
-        snippet.pub_date = timezone.now()
-        snippet.slug = 'my-snippet'
-        snippet.save()
+        snippet = SnippetFactory()
 
         # Check new snippet now in database
         all_snippets = Snippet.objects.all()
@@ -221,12 +215,7 @@ class SnippetViewTest(BaseAcceptanceTest):
 
     def test_sitemap(self):
         # Create a snippet
-        snippet = Snippet()
-        snippet.title = 'My snippet'
-        snippet.content = 'This is my snippet'
-        snippet.slug = 'my-snippet'
-        snippet.pub_date = timezone.now()
-        snippet.save()
+        snippet = SnippetFactory()
 
         response = self.client.get('/sitemap.xml')
         self.assertEquals(response.status_code, 200)
