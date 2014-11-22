@@ -21,3 +21,13 @@ Feature: Snippets
         And I fill in the "content" field with "This is my snippet"
         And I submit the form
         Then I should see the text "This is my snippet"
+
+    Scenario: Create a comment
+        Given I am logged in
+        When I visit the "/" page
+        And I fill in the "title" field with "My commentable snippet"
+        And I fill in the "content" field with "This is my commentable snippet"
+        And I submit the form
+        And I fill in the "comment" field with "This is my comment"
+        And I submit the form
+        Then I should see the text "This is my comment"
