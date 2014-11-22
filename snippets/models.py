@@ -16,6 +16,7 @@ class Snippet(models.Model):
             self.pub_date = timezone.now()
         if not self.slug:
             self.slug = slugify(unicode(self.title))
+        super(Snippet, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return "/%s/%s/%s/" % (self.pub_date.year, self.pub_date.month, self.slug)
