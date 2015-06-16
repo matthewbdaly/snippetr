@@ -74,7 +74,7 @@ class AdminTest(BaseAcceptanceTest):
         self.assertEqual(response.status_code, 200)
 
         # Check 'Log in' in response
-        self.assertTrue('Log in' in response.content)
+        self.assertTrue('Log in' in response.content.decode('utf-8'))
 
         # Log the user in
         self.client.login(username='bobsmith', password="password")
@@ -84,7 +84,7 @@ class AdminTest(BaseAcceptanceTest):
         self.assertEqual(response.status_code, 200)
 
         # Check 'Log out' in response
-        self.assertTrue('Log out' in response.content)
+        self.assertTrue('Log out' in response.content.decode('utf-8'))
 
     def test_logout(self):
         # Create user
@@ -98,7 +98,7 @@ class AdminTest(BaseAcceptanceTest):
         self.assertEqual(response.status_code, 200)
 
         # Check 'Log out' in response
-        self.assertTrue('Log out' in response.content)
+        self.assertTrue('Log out' in response.content.decode('utf-8'))
 
         # Log out
         self.client.logout()
@@ -108,7 +108,7 @@ class AdminTest(BaseAcceptanceTest):
         self.assertEqual(response.status_code, 200)
 
         # Check 'Log in' in response
-        self.assertTrue('Log in' in response.content)
+        self.assertTrue('Log in' in response.content.decode('utf-8'))
 
     def test_create_snippet(self):
         # Create user
@@ -208,11 +208,11 @@ class SnippetViewTest(BaseAcceptanceTest):
         self.assertEqual(response.status_code, 200)
 
         # Check the snippet details are in the response
-        self.assertTrue(snippet.title in response.content)
-        self.assertTrue(snippet.content in response.content)
-        self.assertTrue(str(snippet.pub_date.year) in response.content)
-        self.assertTrue(snippet.pub_date.strftime('%b') in response.content)
-        self.assertTrue(str(snippet.pub_date.day) in response.content)
+        self.assertTrue(snippet.title in response.content.decode('utf-8'))
+        self.assertTrue(snippet.content in response.content.decode('utf-8'))
+        self.assertTrue(str(snippet.pub_date.year) in response.content.decode('utf-8'))
+        self.assertTrue(snippet.pub_date.strftime('%b') in response.content.decode('utf-8'))
+        self.assertTrue(str(snippet.pub_date.day) in response.content.decode('utf-8'))
 
     def test_create_snippet(self):
         # Create user
