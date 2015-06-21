@@ -22,15 +22,15 @@ urlpatterns = patterns('',
 
     # Index - create new snippet
     url(r'^$', login_required(SnippetCreateView.as_view(
-        ))),
+        )), name='snippet_create'),
 
     # Individual posts
     url(r'^(?P<pub_date__year>\d{4})/(?P<pub_date__month>\d{1,2})/(?P<slug>[a-zA-Z0-9-]+)/?$', cache_page(900)(SnippetDetailView.as_view(
-        ))),
+        )), name='snippet_detail'),
 
     # Login
     url(r'^accounts/login/?$', anonymous_required(LoginView.as_view(
-        ))),
+        )), name='login'),
 
     # Sitemap
     url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps},

@@ -1,8 +1,10 @@
-from django.test import TestCase, LiveServerTestCase, Client
+from django.test import TestCase, LiveServerTestCase, Client, RequestFactory
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.urlresolvers import reverse
 from snippets.models import Snippet
 from snippets.forms import SnippetForm
+from snippets.views import LoginView, SnippetCreateView, SnippetDetailView
 import factory.django
 
 # Factories for tests
@@ -82,6 +84,57 @@ class SnippetFormTest(TestCase):
         }
         form = SnippetForm(data)
         self.assertTrue(form.is_valid())
+
+
+class BaseViewTest(TestCase):
+    def setUp(self):
+        self.user = UserFactory()
+        self.factory = RequestFactory()
+
+
+class LoginViewTest(BaseViewTest):
+    """
+    Test the Login view
+    """
+    def test_get(self):
+        """
+        Test GET requests
+        """
+        request = self.factory.get(reverse('login'))
+        request.user = self.user
+        response = LoginView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context_data['user'], self.user)
+        self.assertEqual(response.context_data['request'], request)
+
+
+class SnippetCreateViewTest(BaseViewTest):
+    """
+    Test the snippet create view
+    """
+    def test_get(self):
+        """
+        Test GET requests
+        """
+        request = self.factory.get(reverse('snippet_create'))
+        request.user = self.user
+        response = SnippetCreateView.as_view()(request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context_data['user'], self.user)
+        self.assertEqual(response.context_data['request'], request)
+
+    def test_post(self):
+        """
+        Test post requests
+        """
+        data = {
+            'title': 'My snippet',
+            'content': 'This is my snippet'
+        }
+        request = self.factory.post(reverse('snippet_create'), data)
+        request.user = self.user
+        response = SnippetCreateView.as_view()(request)
+        self.assertEqual(response.status_code, 302)
 
 
 class BaseAcceptanceTest(LiveServerTestCase):
