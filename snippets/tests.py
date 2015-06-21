@@ -2,6 +2,7 @@ from django.test import TestCase, LiveServerTestCase, Client
 from django.contrib.auth.models import User
 from django.utils import timezone
 from snippets.models import Snippet
+from snippets.forms import SnippetForm
 import factory.django
 
 # Factories for tests
@@ -57,9 +58,36 @@ class SnippetTest(TestCase):
         self.assertEqual(only_snippet.pub_date.second, snippet.pub_date.second)
 
 
+class SnippetFormTest(TestCase):
+    """
+    Test the snippet form
+    """
+    def setUp(self):
+        self.user = UserFactory()
+
+    def test_empty_form(self):
+        """
+        Test a form with no content
+        """
+        form = SnippetForm()
+        self.assertFalse(form.is_valid())
+
+    def test_completed_form(self):
+        """
+        Test a form with content
+        """
+        data = {
+            'title': 'My snippet',
+            'content': 'This is my snippet'
+        }
+        form = SnippetForm(data)
+        self.assertTrue(form.is_valid())
+
+
 class BaseAcceptanceTest(LiveServerTestCase):
     def setUp(self):
         self.client = Client()
+
 
 class AdminTest(BaseAcceptanceTest):
 
