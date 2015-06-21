@@ -137,6 +137,24 @@ class SnippetCreateViewTest(BaseViewTest):
         self.assertEqual(response.status_code, 302)
 
 
+class SnippetDetailViewTest(BaseViewTest):
+    """
+    Test the snippet create view
+    """
+    def test_get(self):
+        """
+        Test GET requests
+        """
+        snippet = SnippetFactory()
+        url = reverse('snippet_detail', args=[snippet.pub_date.year,snippet.pub_date.month,snippet.slug])
+        request = self.factory.get(url)
+        request.user = self.user
+        response = SnippetDetailView.as_view()(request, slug=snippet.slug)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context_data['user'], self.user)
+        self.assertEqual(response.context_data['request'], request)
+
+
 class BaseAcceptanceTest(LiveServerTestCase):
     def setUp(self):
         self.client = Client()
