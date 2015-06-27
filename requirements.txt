@@ -23,6 +23,7 @@ gunicorn==19.3.0
 ipdb==0.8.1
 ipython==3.1.0
 logilab-common==0.63.2
+lxml==3.4.4
 markdown2==2.3.0
 oauthlib==0.7.2
 parse==1.6.6
