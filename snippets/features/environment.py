@@ -2,7 +2,7 @@ from splinter.browser import Browser
 from snippets.tests import UserFactory
 
 def before_all(context):
-    context.browser = Browser('chrome')
+    context.browser = Browser('phantomjs')
     context.user = UserFactory()
 
 def after_all(context):
