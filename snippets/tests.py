@@ -6,6 +6,7 @@ from snippets.models import Snippet
 from snippets.forms import SnippetForm
 from snippets.views import LoginView, SnippetCreateView, SnippetDetailView
 import factory.django
+from unittest.mock import patch, MagicMock
 
 # Factories for tests
 class SnippetFactory(factory.django.DjangoModelFactory):
@@ -123,18 +124,26 @@ class SnippetCreateViewTest(BaseViewTest):
         self.assertEqual(response.context_data['user'], self.user)
         self.assertEqual(response.context_data['request'], request)
 
+    @patch('snippets.models.Snippet.save', MagicMock(name="save"))
     def test_post(self):
         """
         Test post requests
         """
+        # Create the request
         data = {
             'title': 'My snippet',
             'content': 'This is my snippet'
         }
         request = self.factory.post(reverse('snippet_create'), data)
         request.user = self.user
+
+        # Get the response
         response = SnippetCreateView.as_view()(request)
         self.assertEqual(response.status_code, 302)
+
+        # Check save was called
+        self.assertTrue(Snippet.save.called)
+        self.assertEqual(Snippet.save.call_count, 1)
 
 
 class SnippetDetailViewTest(BaseViewTest):
