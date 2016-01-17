@@ -256,7 +256,7 @@ class AdminTest(BaseAcceptanceTest):
         self.client.login(username='bobsmith', password="password")
 
         # Edit the post
-        response = self.client.post('/admin/snippets/snippet/' + str(snippet.pk) + '/', {
+        response = self.client.post('/admin/snippets/snippet/' + str(snippet.pk) + '/change/', {
             'title': 'My second snippet',
             'content': 'This is my second snippet',
             'pub_date_0': '2013-12-28',
