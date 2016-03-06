@@ -1,4 +1,4 @@
-Django==1.9.1
+Django==1.9.4
 PyJWT==1.4.0
 PyYAML==3.11
 Pygments==2.0.2
@@ -31,10 +31,10 @@ parse-type==0.3.4
 psycopg2==2.6.1
 pylibmc==1.5.0
 pylint==1.4.3
-python-social-auth==0.2.13
+python-social-auth==0.2.14
 python3-openid==3.0.9
 requests==2.9.1
-requests-oauthlib==0.6.0
+requests-oauthlib==0.6.1
 selenium==2.46.0
 six==1.10.0
 splinter==0.7.3
